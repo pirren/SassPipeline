@@ -10,19 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
     steps:
       - name: Checkout source Git branch
         uses: actions/checkout@v2
       
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: Use Node.js 2.1.5
+        uses: actions/setup-node@v2.1.5
 
       - name: Install dependencies
         run: npm install
@@ -30,8 +24,8 @@ jobs:
       - name: Compile sass
         run: npm run sass
 
-      # - name: Make destination directory for compiled CSS
-      #   run: mkdir -vp /tmp/repo-name/assets/css
+      - name: Make destination directory for compiled CSS
+        run: mkdir css
 
       # - name: Sass Build
       #   uses: gha-utilities/sass-build@v0.3.7
