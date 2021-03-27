@@ -10,24 +10,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
     steps:
       - name: Checkout source Git branch
         uses: actions/checkout@v2
       
-      - name: Make destination directory for compiled CSS
-        run: mkdir -vp /tmp/repo-name/assets/css
 
-      - name: Sass Build
-        uses: gha-utilities/sass-build@v0.3.7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          source: scss/style.scss
-          destination: /tmp/repo-name/assets/css/style.css
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Compile sass
+        run: npm run sass
+
+      # - name: Make destination directory for compiled CSS
+      #   run: mkdir -vp /tmp/repo-name/assets/css
+
+      # - name: Sass Build
+      #   uses: gha-utilities/sass-build@v0.3.7
+      #   with:
+      #     source: scss/style.scss
+      #     destination: /tmp/repo-name/assets/css/style.css
 
       - name: Checkout destination Git branch
         uses: actions/checkout@v2
 
-      - name: Move compiled CSS to path within master branch
-        run: mv /tmp/repo-name/assets/css css/
+      # - name: Move compiled CSS to path within master branch
+      #   run: mv /tmp/repo-name/assets/css css/
 
       - name: Add and Commit changes to master branch
         run: |
