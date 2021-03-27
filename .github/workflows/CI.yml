@@ -12,7 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      
+      - name: Create css directory 
         run: mkdir css
 
       - name: Sass Build
