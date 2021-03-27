@@ -15,5 +15,5 @@ jobs:
     - name: Sass Build
       uses: gha-utilities/sass-build@v0.3.7
       with:
-        source: scss/style.scss
-        destination: css/style.css
+        source: ~/scss/style.scss
+        destination: ~/css/style.css
